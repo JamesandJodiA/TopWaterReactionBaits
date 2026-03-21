@@ -1,15 +1,22 @@
-
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "./cartcontext";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { cartItems } = useCart();
   const itemCount = cartItems.reduce((sum, i) => sum + i.quantity, 0);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const links = [
     { href: "/feather-pop",   label: "Feather Pop"   },
@@ -83,7 +90,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }} className="hidden md:flex">
+          <div style={{ display: isMobile ? "none" : "flex", alignItems: "center", gap: "1.5rem" }}>
             {links.map((l) => (
               <Link
                 key={l.href}
@@ -154,7 +161,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile: cart + hamburger */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }} className="flex md:hidden">
+          <div style={{ display: isMobile ? "flex" : "none", alignItems: "center", gap: "0.75rem" }}>
             <Link
               href="/cart"
               style={{ color: "#D4A96A", position: "relative", textDecoration: "none" }}
@@ -207,7 +214,7 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile drawer */}
-      {menuOpen && (
+      {menuOpen && isMobile && (
         <div
           style={{
             position: "fixed",
@@ -219,7 +226,6 @@ export default function Navbar() {
             zIndex: 49,
             padding: "1rem 1.5rem 1.5rem",
           }}
-          className="md:hidden"
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
             {links.map((l) => (
