@@ -322,7 +322,7 @@ export default function KnightSeriesPage() {
           maxWidth: "520px",
           marginBottom: "0.5rem",
         }}>
-          {"Fishing's not luck — it's strategy. Move smart. Strike fast."}
+        Fishing&apos;s not luck — it&apos;s strategy. Move smart. Strike fast.
         </p>
         <hr style={{ border: "none", borderTop: "1px solid rgba(122,80,32,0.3)", margin: "1.5rem 0 2.5rem" }} />
 

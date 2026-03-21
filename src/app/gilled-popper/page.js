@@ -64,7 +64,7 @@ export default function GilledPopperPage() {
         <main style={{ background: "#241508", minHeight: "100vh", padding: "4rem 2rem" }}>
             <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
 
-                <p className="eyebrow" style={{ marginBottom: "0.75rem" }}>{"2½\" · ½ oz · Gilled Body"}</p>
+                <p className="eyebrow" style={{ marginBottom: "0.75rem" }}>2½&quot; - ½ oz · Gilled Body</p>
                 <h1 style={{
                     fontFamily: "'Playfair Display', serif",
                     fontWeight: 900,
