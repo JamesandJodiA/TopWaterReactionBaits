@@ -395,8 +395,7 @@ export default function Home() {
               marginBottom: "1.25rem",
             }}
           >
-            "After fishing with these lures for many years, topwater enthusiasts
-            find fish are easily attracted to these simple baits."
+            {`"After fishing with these lures for many years, topwater enthusiasts find fish are easily attracted to these simple baits."`}
           </h2>
           <p
             style={{
@@ -408,7 +407,7 @@ export default function Home() {
             }}
           >
             We paint, assemble, and package every lure in our shop. Choose from
-            over 25 color patterns across four series — there's a bait for every
+            over 25 color patterns across four series — {"there's a bait for every"}
             condition on the water.
           </p>
           <a href="/about" className="btn-outline">
