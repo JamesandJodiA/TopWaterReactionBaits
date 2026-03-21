@@ -29,8 +29,8 @@ export default function Footer() {
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "cover",
-            objectPosition: "center 40%",
+            objectFit: "contain",
+            objectPosition: "center",
             opacity: 0.45,
           }}
         />

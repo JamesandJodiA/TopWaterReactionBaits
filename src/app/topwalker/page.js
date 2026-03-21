@@ -120,7 +120,7 @@ export default function TopWalkerPage() {
                     color: "#FAF6EE",
                     marginBottom: "0.5rem",
                 }}>
-                    Feather Pop
+                    TopWalker
                 </h1>
                 <hr style={{ border: "none", borderTop: "1px solid rgba(122,80,32,0.3)", margin: "1.5rem 0 2.5rem" }} />
 
