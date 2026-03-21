@@ -30,69 +30,101 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-black text-white p-6 rounded shadow">
-      <h1 className="text-3xl font-bold mb-4">Contact Us</h1>
+    <div style={{ background: "#241508", minHeight: "80vh", padding: "4rem 1.5rem" }}>
+      <div style={{ maxWidth: "580px", margin: "0 auto" }}>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1 font-semibold" htmlFor="name">Full Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            className="w-full p-2 rounded bg-white text-black"
-          />
-        </div>
+        <p className="eyebrow" style={{ marginBottom: "0.75rem" }}>Get in Touch</p>
+        <h1 style={{
+          fontFamily: "'Playfair Display', serif",
+          fontWeight: 900,
+          fontSize: "2.5rem",
+          color: "#FAF6EE",
+          marginBottom: "2.5rem",
+        }}>
+          Contact Us
+        </h1>
 
-        <div>
-          <label className="block mb-1 font-semibold" htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            className="w-full p-2 rounded bg-white text-black"
-          />
-        </div>
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
-        <div>
-          <label className="block mb-1 font-semibold" htmlFor="subject">Subject</label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            required
-            className="w-full p-2 rounded bg-white text-black"
-          />
-        </div>
+          {[
+            { label: "Full Name", id: "name",    type: "text",  name: "name"    },
+            { label: "Email",     id: "email",   type: "email", name: "email"   },
+            { label: "Subject",   id: "subject", type: "text",  name: "subject" },
+          ].map((f) => (
+            <div key={f.id}>
+              <label style={{
+                display: "block",
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "0.65rem",
+                fontWeight: 600,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#C07830",
+                marginBottom: "0.4rem",
+              }}>
+                {f.label}
+              </label>
+              <input
+                type={f.type}
+                id={f.id}
+                name={f.name}
+                required
+                style={{
+                  width: "100%",
+                  padding: "0.65rem 0.85rem",
+                  background: "#3A2010",
+                  border: "1px solid rgba(122,80,32,0.45)",
+                  borderRadius: "2px",
+                  color: "#F2E8D0",
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "0.95rem",
+                  outline: "none",
+                }}
+              />
+            </div>
+          ))}
 
-        <div>
-          <label className="block mb-1 font-semibold" htmlFor="message">Message</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="5"
-            required
-            className="w-full p-2 rounded bg-white text-black"
-          ></textarea>
-        </div>
+          <div>
+            <label style={{
+              display: "block",
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: "0.65rem",
+              fontWeight: 600,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "#C07830",
+              marginBottom: "0.4rem",
+            }}>
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+              style={{
+                width: "100%",
+                padding: "0.65rem 0.85rem",
+                background: "#3A2010",
+                border: "1px solid rgba(122,80,32,0.45)",
+                borderRadius: "2px",
+                color: "#F2E8D0",
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "0.95rem",
+                outline: "none",
+                resize: "vertical",
+              }}
+            />
+          </div>
 
-        <input
-          type="text"
-          name="botField"
-          style={{display: 'none'}}
-          autoComplete="off"
-        />
+          <input type="text" name="botField" style={{ display: "none" }} autoComplete="off" />
 
-        <button
-          type="submit"
-          className="w-full bg-odgreen hover:bg-green-800 text white py-2 px-4 rounded font-bold"
-        >
-          Submit
-        </button>
-      </form>
+          <button type="submit" className="btn-primary" style={{ width: "100%", padding: "0.85rem", fontSize: "0.8rem" }}>
+            Send Message
+          </button>
 
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -5,10 +6,8 @@ import { useState } from "react";
 import { useCart } from "../components/cartcontext";
 import { priceIds } from "../lib/priceIds";
 
-// Select which price ID to use based on your env
 const MODE = process.env.NEXT_PUBLIC_STRIPE_MODE === "live" ? "live" : "test";
 
-// ---- DATA: White on the left, Black on the right ----
 const PAIRS = [
   {
     model: "Feather Pop",
@@ -57,111 +56,321 @@ const PAIRS = [
   },
 ];
 
-const money = (n) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n);
-
-export default function KnightSeriesPage() {
+function WhiteCard({ item }) {
+  const [quantity, setQuantity] = useState(1);
+  const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
+  const priceId = priceIds[item.id]?.[MODE];
 
-  // Single card for either White or Black item
-  const Card = ({ item }) => {
-    const [quantity, setQuantity] = useState(1);
-    const priceId = priceIds[item.id]?.[MODE]; // must exist in src/app/lib/priceIds.js
-
-    const clampQty = (n) => {
-      const q = Number.isFinite(n) ? Math.max(1, Math.floor(n)) : 1;
-      return q;
-    };
-
-    const handleAdd = () => {
-      addToCart({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity,
-        image: item.image,
-        priceId,
-      });
-    };
-
-    return (
-      <article className="rounded-2xl border border-white/10 overflow-hidden bg-black/40">
-        {/* full image (no crop), exact size hints to prevent layout shift */}
-        <div className="relative w-full bg-black">
-          <Image
-            src={item.image}
-            alt={item.name}
-            width={1670}
-            height={600}
-            className="w-full h-auto object-contain rounded-t-2xl"
-            priority={false}
-          />
-        </div>
-
-        <div className="p-4 space-y-3">
-          <h2 className="text-xl font-bold">{item.name}</h2>
-
-          <div className="flex items-center justify-between">
-            <span className="text-lg font-semibold">{money(item.price)}</span>
-          </div>
-
-          {/* Quantity + Add to Cart (matches your existing styling) */}
-          <div className="flex items-center justify-between gap-3">
-            <label className="text-white">Quantity</label>
-            <input
-              type="number"
-              min={1}
-              value={quantity}
-              onChange={(e) => setQuantity(clampQty(parseInt(e.target.value, 10)))}
-              className="bg-gray-300 text-black w-16 text-center border border-gray-400 rounded px-2 py-1"
-            />
-
-            <button
-              onClick={handleAdd}
-              className="bg-[#7A9C45] hover:bg-[#8FB952] active:bg-odgreen text-white px-4 py-2 rounded"
-            >
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </article>
-    );
+  const handleAdd = () => {
+    addToCart({ id: item.id, name: item.name, price: item.price, quantity, image: item.image, priceId });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
   };
 
   return (
-    <div className="mx-auto max-w-7xl py-10 space-y-8">
-      <header className="text-center space-y-3">
-        <h1 className="text-4xl font-bold mb-2 text-center">Knight Series</h1>
-        <p className="text-white/80 max-w-2xl mx-auto">
-          Fishing&apos;s not luck - it&apos;s strategy. Move smart. Strike fast.
-        </p>
-      </header>
-
-      {/* One row per model; two columns on desktop */}
-      <div className="space-y-8">
-        {PAIRS.map((pair) => (
-          <section key={pair.model} aria-label={pair.model}>
-            <div className="mb-3 px-1">
-              <h3 className="text-lg font-semibold text-white/90">{pair.model}</h3>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Left: White */}
-              <Card item={pair.white} />
-              {/* Right: Black */}
-              <Card item={pair.black} />
-            </div>
-          </section>
-        ))}
+    <article
+      style={{
+        background: "#BCA882",
+        border: "1px solid rgba(240,237,232,0.4)",
+        borderRadius: "4px",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        transition: "transform 0.2s",
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-3px)")}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+    >
+      <div style={{ background: "#E8E4DC" }}>
+        <Image
+          src={item.image}
+          alt={item.name}
+          width={1670}
+          height={600}
+          style={{ width: "100%", height: "auto", objectFit: "contain", display: "block" }}
+        />
       </div>
-
-      <section className="rounded-2xl border border-white/10 p-6 md:p-8 bg-black/40">
-        <h3 className="text-xl font-semibold mb-2">About the Knight Series</h3>
-        <p className="text-white/80">
-          Hand-finished, small-batch runs. White and Black finishes nod to the chessboard—tuned for long casts and
-          explosive strikes. 
+      <div style={{ padding: "1.25rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <p style={{
+          fontFamily: "'Source Sans 3', sans-serif",
+          fontSize: "0.65rem",
+          fontWeight: 600,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: "#7A5020",
+        }}>
+          White Knight
         </p>
-      </section>
-    </div>
+        <h2 style={{
+          fontFamily: "'Bitter', serif",
+          fontWeight: 700,
+          fontSize: "1rem",
+          color: "#241508",
+        }}>
+          {item.name}
+        </h2>
+        <p style={{
+          fontFamily: "'Bitter', serif",
+          fontSize: "1.25rem",
+          fontWeight: 600,
+          color: "#3A2010",
+        }}>
+          ${item.price.toFixed(2)}
+        </p>
+        <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-end", marginTop: "auto" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+            <label style={{
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: "0.6rem",
+              fontWeight: 600,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "rgba(58,32,16,0.55)",
+            }}>
+              Qty
+            </label>
+            <input
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+              style={{
+                background: "#D4C4A8",
+                border: "1px solid rgba(122,80,32,0.4)",
+                color: "#241508",
+                width: "54px",
+                textAlign: "center",
+                padding: "5px 4px",
+                fontSize: "0.875rem",
+                borderRadius: "2px",
+              }}
+            />
+          </div>
+          <button
+            onClick={handleAdd}
+            style={{
+              flex: 1,
+              background: added ? "#5A7040" : "#3D5230",
+              color: "#F2E8D0",
+              border: "none",
+              padding: "0.6rem",
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              borderRadius: "2px",
+              cursor: "pointer",
+              height: "36px",
+              transition: "background 0.2s",
+            }}
+          >
+            {added ? "✓ Added" : "Add to Cart"}
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function BlackCard({ item }) {
+  const [quantity, setQuantity] = useState(1);
+  const [added, setAdded] = useState(false);
+  const { addToCart } = useCart();
+  const priceId = priceIds[item.id]?.[MODE];
+
+  const handleAdd = () => {
+    addToCart({ id: item.id, name: item.name, price: item.price, quantity, image: item.image, priceId });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
+  };
+
+  return (
+    <article
+      style={{
+        background: "#1A1008",
+        border: "1px solid rgba(122,80,32,0.3)",
+        borderRadius: "4px",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        transition: "transform 0.2s, border-color 0.2s",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "translateY(-3px)";
+        e.currentTarget.style.borderColor = "#C07830";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.borderColor = "rgba(122,80,32,0.3)";
+      }}
+    >
+      <div style={{ background: "#120A04" }}>
+        <Image
+          src={item.image}
+          alt={item.name}
+          width={1670}
+          height={600}
+          style={{ width: "100%", height: "auto", objectFit: "contain", display: "block" }}
+        />
+      </div>
+      <div style={{ padding: "1.25rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <p style={{
+          fontFamily: "'Source Sans 3', sans-serif",
+          fontSize: "0.65rem",
+          fontWeight: 600,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: "#C07830",
+        }}>
+          Black Knight
+        </p>
+        <h2 style={{
+          fontFamily: "'Bitter', serif",
+          fontWeight: 700,
+          fontSize: "1rem",
+          color: "#FAF6EE",
+        }}>
+          {item.name}
+        </h2>
+        <p style={{
+          fontFamily: "'Bitter', serif",
+          fontSize: "1.25rem",
+          fontWeight: 600,
+          color: "#D4A96A",
+        }}>
+          ${item.price.toFixed(2)}
+        </p>
+        <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-end", marginTop: "auto" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+            <label style={{
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: "0.6rem",
+              fontWeight: 600,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "rgba(212,169,106,0.55)",
+            }}>
+              Qty
+            </label>
+            <input
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+              style={{
+                background: "#241508",
+                border: "1px solid rgba(122,80,32,0.45)",
+                color: "#F2E8D0",
+                width: "54px",
+                textAlign: "center",
+                padding: "5px 4px",
+                fontSize: "0.875rem",
+                borderRadius: "2px",
+              }}
+            />
+          </div>
+          <button
+            onClick={handleAdd}
+            style={{
+              flex: 1,
+              background: added ? "#3D5230" : "#C07830",
+              color: added ? "#F2E8D0" : "#241508",
+              border: "none",
+              padding: "0.6rem",
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              borderRadius: "2px",
+              cursor: "pointer",
+              height: "36px",
+              transition: "background 0.2s, color 0.2s",
+            }}
+          >
+            {added ? "✓ Added" : "Add to Cart"}
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export default function KnightSeriesPage() {
+  return (
+    <main style={{ background: "#241508", minHeight: "100vh", padding: "4rem 2rem" }}>
+      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+
+        {/* Header */}
+        <p className="eyebrow" style={{ marginBottom: "0.75rem" }}>Limited Edition</p>
+        <h1 style={{
+          fontFamily: "'Playfair Display', serif",
+          fontWeight: 900,
+          fontSize: "clamp(2rem, 5vw, 3.5rem)",
+          color: "#FAF6EE",
+          marginBottom: "0.5rem",
+        }}>
+          Knight Series
+        </h1>
+        <p style={{
+          fontFamily: "'Source Sans 3', sans-serif",
+          fontSize: "1rem",
+          color: "rgba(242,232,208,0.6)",
+          lineHeight: 1.7,
+          maxWidth: "520px",
+          marginBottom: "0.5rem",
+        }}>
+          Fishing's not luck — it's strategy. Move smart. Strike fast.
+        </p>
+        <hr style={{ border: "none", borderTop: "1px solid rgba(122,80,32,0.3)", margin: "1.5rem 0 2.5rem" }} />
+
+        {/* Pairs */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "3.5rem" }}>
+          {PAIRS.map((pair) => (
+            <section key={pair.model}>
+              <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>{pair.model}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <WhiteCard item={pair.white} />
+                <BlackCard item={pair.black} />
+              </div>
+            </section>
+          ))}
+        </div>
+
+        {/* About strip */}
+        <div style={{
+          marginTop: "4rem",
+          background: "#3A2010",
+          border: "1px solid rgba(122,80,32,0.3)",
+          borderRadius: "4px",
+          padding: "2rem 2.5rem",
+        }}>
+          <p className="eyebrow" style={{ marginBottom: "0.6rem" }}>About the Knight Series</p>
+          <h3 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 700,
+            fontSize: "1.4rem",
+            color: "#FAF6EE",
+            marginBottom: "0.75rem",
+          }}>
+            Hand-finished. Small-batch.{" "}
+            <em style={{ color: "#D4A96A" }}>Chess-inspired.</em>
+          </h3>
+          <p style={{
+            fontFamily: "'Source Sans 3', sans-serif",
+            fontSize: "0.95rem",
+            color: "rgba(242,232,208,0.7)",
+            lineHeight: 1.8,
+            maxWidth: "600px",
+          }}>
+            White and Black finishes nod to the chessboard — tuned for long casts
+            and explosive strikes. Available in Feather Pop, Gilled Popper, and TopWalker.
+          </p>
+        </div>
+
+      </div>
+    </main>
   );
 }

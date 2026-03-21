@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -28,4 +28,146 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 5rem;
 }
+ */
 
+ @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Bitter:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bark:    #241508;
+  --mud:     #3A2010;
+  --bronze:  #7A5020;
+  --copper:  #C07830;
+  --tan:     #D4A96A;
+  --cream:   #F2E8D0;
+  --sage:    #3D5230;
+  --moss:    #5A7040;
+  --water:   #263C48;
+  --mist:    #6A9AAE;
+  --offwhite:#FAF6EE;
+}
+
+@theme inline {
+  --color-background: var(--bark);
+  --color-foreground: var(--cream);
+  --color-odgreen:    #5A7040;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bark);
+  color: var(--cream);
+  font-family: 'Source Sans 3', sans-serif;
+  padding-top: 4.5rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Utility classes available site-wide */
+.font-display  { font-family: 'Playfair Display', serif; }
+.font-serif    { font-family: 'Bitter', serif; }
+.font-sans     { font-family: 'Source Sans 3', sans-serif; }
+
+.text-copper   { color: var(--copper); }
+.text-tan      { color: var(--tan); }
+.text-cream    { color: var(--cream); }
+.text-sage     { color: var(--sage); }
+.text-mist     { color: var(--mist); }
+
+.bg-bark       { background-color: var(--bark); }
+.bg-mud        { background-color: var(--mud); }
+.bg-sage       { background-color: var(--sage); }
+.bg-water      { background-color: var(--water); }
+
+.border-bronze { border-color: var(--bronze); }
+.border-copper { border-color: var(--copper); }
+
+/* Eyebrow label style used across pages */
+.eyebrow {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--copper);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 2px;
+  background: var(--copper);
+  flex-shrink: 0;
+}
+
+/* Divider rule */
+.rule {
+  border: none;
+  border-top: 1px solid rgba(122, 80, 32, 0.3);
+}
+
+/* Primary CTA button */
+.btn-primary {
+  display: inline-block;
+  background: var(--copper);
+  color: var(--bark);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.75rem;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover { background: var(--tan); }
+
+/* Outline button */
+.btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--tan);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.75rem;
+  border: 1.5px solid var(--tan);
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-outline:hover { border-color: var(--copper); color: var(--copper); }
+
+/* Tailwind custom color passthrough */
+@layer base {
+  :root {
+    --tw-odgreen: #5A7040;
+  }
+}

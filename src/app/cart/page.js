@@ -30,7 +30,7 @@ export default function CartPage() {
             key={item.id}
             className="bg-black rounded-lg p-4 flex items-center gap-4"
           >
-            <img src={item.image} alt={item.name} className="w-28 h-20 object-cover rounded" />
+            <img src={item.image} alt={item.name} className="w-28 h-20 object-contain rounded" style={{background: "#C8A97A"}} />
             <div className="flex-1">
               <div className="font-semibold">{item.name}</div>
               <div className="text-sm opacity-80">${item.price.toFixed(2)} each</div>

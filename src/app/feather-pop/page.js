@@ -46,14 +46,27 @@ export default function FeatherPopPage() {
     ]
 
     return (
-        <main className="font-sans bg-black text-white min-h-screen p-8">
-            <h1 className="text-4xl font-bold mb-2 text-center">Feather Pop</h1>
-            <h2 className="text-center mb-6">This lure is 2 1/2&quot; and weighs approx. 1/3 oz with a smooth body.</h2>
+        <main style={{ background: "#241508", minHeight: "100vh", padding: "4rem 2rem" }}>
+            <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                {lures.map((lure) => (
-                    <LureCard key={lure.id} {...lure} />
-                ))}
+                <p className="eyebrow" style={{ marginBottom: "0.75rem" }}>2½" · ⅓ oz · Smooth Body</p>
+                <h1 style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontWeight: 900,
+                    fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                    color: "#FAF6EE",
+                    marginBottom: "0.5rem",
+                }}>
+                    Feather Pop
+                </h1>
+                <hr style={{ border: "none", borderTop: "1px solid rgba(122,80,32,0.3)", margin: "1.5rem 0 2.5rem" }} />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {lures.map((lure) => (
+                        <LureCard key={lure.id} {...lure} />
+                    ))}
+                </div>
+
             </div>
         </main>
     );
