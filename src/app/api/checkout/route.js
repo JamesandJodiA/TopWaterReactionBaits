@@ -57,7 +57,14 @@ export async function POST(req) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
+
+      // Required because these are physical products.
+      shipping_address_collection: {
+        allowed_countries: ["US"],
+      },
+
       automatic_tax: { enabled: true },
+
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/canceled`,
     });
