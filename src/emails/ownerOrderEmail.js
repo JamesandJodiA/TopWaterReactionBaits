@@ -1,4 +1,4 @@
-import sg from "@sendgrid/mail";
+import { sendMail } from "../lib/mail";
 
 function formatMoney(amount, currency = "usd") {
   return new Intl.NumberFormat("en-US", {
@@ -23,17 +23,9 @@ function formatAddress(address) {
 }
 
 export async function sendOwnerOrderEmail(order) {
-  if (
-    !process.env.SENDGRID_API_KEY ||
-    !process.env.CONTACT_FROM ||
-    !process.env.CONTACT_TO
-  ) {
-    throw new Error(
-      "Missing SENDGRID_API_KEY, CONTACT_FROM, or CONTACT_TO"
-    );
-  }
-
-  sg.setApiKey(process.env.SENDGRID_API_KEY);
+    if (!process.env.CONTACT_TO) {
+        throw new Error("Missing CONTACT_TO");
+    }
 
   const itemText = order.items
     .map(
@@ -68,9 +60,8 @@ export async function sendOwnerOrderEmail(order) {
 
   const total = formatMoney(order.totals.total, order.currency);
 
-  await sg.send({
+  await sendMail({
     to: process.env.CONTACT_TO,
-    from: process.env.CONTACT_FROM,
     replyTo: order.customer.email || undefined,
     subject: `New TopWater order — ${total}`,
     text: [
