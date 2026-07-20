@@ -35,12 +35,21 @@ export async function sendMail({
 }) {
   const mailTransporter = getTransporter();
 
-  return mailTransporter.sendMail({
-    from: `"TopWater Reaction Baits" <${process.env.SMTP_USER}>`,
-    to,
-    subject,
-    text,
-    html,
-    replyTo,
-  });
+console.log("USING_GMAIL_SMTP", {
+  user: process.env.SMTP_USER,
+  to,
+});
+
+const result = await mailTransporter.sendMail({
+  from: `"TopWater Reaction Baits" <${process.env.SMTP_USER}>`,
+  to,
+  subject,
+  text,
+  html,
+  replyTo,
+});
+
+console.log("GMAIL_SEND_COMPLETED");
+
+return result;
 }

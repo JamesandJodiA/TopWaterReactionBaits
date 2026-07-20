@@ -146,6 +146,11 @@ export async function processWebsiteOrder(sessionId) {
     );
   }
 
+  console.log("ABOUT_TO_SEND_OWNER_EMAIL", {
+    to: process.env.CONTACT_TO,
+    sessionId: order.stripe.sessionId,
+  });
+
   await sendOwnerOrderEmail(order);
 
   console.log("WEBSITE_ORDER_PROCESSED", {
