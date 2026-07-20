@@ -2,7 +2,34 @@ import nodemailer from "nodemailer";
 
 let transporter;
 
+// function getTransporter() {
+//   if (!process.env.SMTP_USER) {
+//     throw new Error("Missing SMTP_USER");
+//   }
+
+//   if (!process.env.SMTP_PASS) {
+//     throw new Error("Missing SMTP_PASS");
+//   }
+
+//   if (!transporter) {
+//     transporter = nodemailer.createTransport({
+//       host: "smtp.gmail.com",
+//       port: 465,
+//       secure: true,
+//       auth: {
+//         user: process.env.SMTP_USER,
+//         pass: process.env.SMTP_PASS,
+//       },
+//     });
+//   }
+
 function getTransporter() {
+  console.log("ENV CHECK", {
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASS_EXISTS: !!process.env.SMTP_PASS,
+    NODE_ENV: process.env.NODE_ENV,
+  });
+
   if (!process.env.SMTP_USER) {
     throw new Error("Missing SMTP_USER");
   }
