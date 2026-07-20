@@ -132,13 +132,6 @@ export async function sendOwnerOrderEmail(order) {
     `,
   });
 
-console.log("GMAIL_EMAIL_RESULT", {
-  messageId: emailResult.messageId,
-  accepted: emailResult.accepted,
-  rejected: emailResult.rejected,
-  response: emailResult.response,
-});
-
   console.log("OWNER_ORDER_EMAIL_SENT", {
     sessionId: order.stripe.sessionId,
     to: process.env.CONTACT_TO,

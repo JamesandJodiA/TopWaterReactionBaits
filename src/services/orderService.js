@@ -67,15 +67,15 @@ export async function processWebsiteOrder(sessionId) {
    * collected_information.shipping_details. The fallback keeps this
    * compatible with older Stripe API versions.
    */
-const shippingDetails =
-  session.collected_information?.shipping_details ||
-  session.shipping_details ||
-  null;
+  const shippingDetails =
+    session.collected_information?.shipping_details ||
+    session.shipping_details ||
+    null;
 
-const shippingAddress =
-  shippingDetails?.address ||
-  session.customer_details?.address ||
-  null;
+  const shippingAddress =
+    shippingDetails?.address ||
+    session.customer_details?.address ||
+    null;
 
   const order = {
     source: "website",
@@ -153,11 +153,6 @@ const shippingAddress =
       `Stripe returned no line items for Checkout Session ${session.id}`
     );
   }
-
-  console.log("ABOUT_TO_SEND_OWNER_EMAIL", {
-    to: process.env.CONTACT_TO,
-    sessionId: order.stripe.sessionId,
-  });
 
   await sendOwnerOrderEmail(order);
 

@@ -24,11 +24,6 @@ let transporter;
 //   }
 
 function getTransporter() {
-  console.log("ENV CHECK", {
-    SMTP_USER: process.env.SMTP_USER,
-    SMTP_PASS_EXISTS: !!process.env.SMTP_PASS,
-    NODE_ENV: process.env.NODE_ENV,
-  });
 
   if (!process.env.SMTP_USER) {
     throw new Error("Missing SMTP_USER");
@@ -62,11 +57,6 @@ export async function sendMail({
 }) {
   const mailTransporter = getTransporter();
 
-console.log("USING_GMAIL_SMTP", {
-  user: process.env.SMTP_USER,
-  to,
-});
-
 const result = await mailTransporter.sendMail({
   from: `"TopWater Reaction Baits" <${process.env.SMTP_USER}>`,
   to,
@@ -75,8 +65,6 @@ const result = await mailTransporter.sendMail({
   html,
   replyTo,
 });
-
-console.log("GMAIL_SEND_COMPLETED");
 
 return result;
 }
