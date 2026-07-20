@@ -60,7 +60,7 @@ export async function sendOwnerOrderEmail(order) {
 
   const total = formatMoney(order.totals.total, order.currency);
 
-  await sendMail({
+  const emailResult = await sendMail({
     to: process.env.CONTACT_TO,
     replyTo: order.customer.email || undefined,
     subject: `New TopWater order — ${total}`,
@@ -131,6 +131,13 @@ export async function sendOwnerOrderEmail(order) {
       </div>
     `,
   });
+
+console.log("GMAIL_EMAIL_RESULT", {
+  messageId: emailResult.messageId,
+  accepted: emailResult.accepted,
+  rejected: emailResult.rejected,
+  response: emailResult.response,
+});
 
   console.log("OWNER_ORDER_EMAIL_SENT", {
     sessionId: order.stripe.sessionId,
