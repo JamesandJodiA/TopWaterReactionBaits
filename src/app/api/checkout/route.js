@@ -63,6 +63,10 @@ export async function POST(req) {
         allowed_countries: ["US"],
       },
 
+      phone_number_collection: {
+        enabled: true,
+      },
+
       automatic_tax: { enabled: true },
 
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,

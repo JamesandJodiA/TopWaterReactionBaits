@@ -67,10 +67,15 @@ export async function processWebsiteOrder(sessionId) {
    * collected_information.shipping_details. The fallback keeps this
    * compatible with older Stripe API versions.
    */
-  const shippingDetails =
-    session.collected_information?.shipping_details ||
-    session.shipping_details ||
-    null;
+const shippingDetails =
+  session.collected_information?.shipping_details ||
+  session.shipping_details ||
+  null;
+
+const shippingAddress =
+  shippingDetails?.address ||
+  session.customer_details?.address ||
+  null;
 
   const order = {
     source: "website",
@@ -91,16 +96,19 @@ export async function processWebsiteOrder(sessionId) {
     },
 
     shipping: {
-      name: shippingDetails?.name || null,
+      name:
+        shippingDetails?.name ||
+        session.customer_details?.name ||
+        null,
 
-      address: shippingDetails?.address
+      address: shippingAddress
         ? {
-            line1: shippingDetails.address.line1 || "",
-            line2: shippingDetails.address.line2 || "",
-            city: shippingDetails.address.city || "",
-            state: shippingDetails.address.state || "",
-            postalCode: shippingDetails.address.postal_code || "",
-            country: shippingDetails.address.country || "",
+            line1: shippingAddress.line1 || "",
+            line2: shippingAddress.line2 || "",
+            city: shippingAddress.city || "",
+            state: shippingAddress.state || "",
+            postalCode: shippingAddress.postal_code || "",
+            country: shippingAddress.country || "",
           }
         : null,
     },
